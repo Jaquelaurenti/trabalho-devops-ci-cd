@@ -1,18 +1,20 @@
-# Use uma imagem base do Node.js
-FROM node:14
+# Use a imagem oficial do Node.js como base
+FROM node:14-alpine
 
 # Defina o diretório de trabalho dentro do contêiner
-WORKDIR /usr/src/app
+WORKDIR /app
 
-# Copie os arquivos do projeto para o diretório de trabalho
-COPY app/package.json .
-COPY app/index.js .
+# Copie os arquivos package.json e package-lock.json para o diretório de trabalho
+COPY package*.json ./
 
 # Instale as dependências da aplicação
 RUN npm install
 
-# Expõe a porta 3000 para acesso externo
+# Copie todo o código fonte da aplicação para o diretório de trabalho
+COPY . .
+
+# Defina a porta que a aplicação irá expor
 EXPOSE 3000
 
-# Inicia o servidor da aplicação
-CMD [ "node", "index.js" ]
+# Comando a ser executado quando o contêiner for iniciado
+CMD [ "node", "app.js" ]
