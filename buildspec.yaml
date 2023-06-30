@@ -1,7 +1,17 @@
 version: 0.2
+
 phases:
+  install:
+    runtime-versions:
+      nodejs: 14
+    commands:
+      - npm install
+
   build:
     commands:
-      - echo Build started on `date`
-      - docker build -t my-docker-repo/my-app:latest .
-      - docker push my-docker-repo/my-app:latest
+      - npm run build
+
+artifacts:
+  files:
+    - app/**/*
+  discard-paths: yes
